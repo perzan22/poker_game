@@ -52,7 +52,17 @@ public class Deck {
         return deck.poll();
     }
 
-    // toStrin() method
+    public int size() {
+        return deck.size();
+    }
+
+    // getter
+    public Deque<Card> getDeck() {
+        return deck;
+    }
+
+
+    // toString() method
 
     @Override
     public String toString() {
