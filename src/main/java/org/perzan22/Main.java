@@ -19,5 +19,7 @@ public class Main {
         System.out.println(player);
 
         System.out.println(deck);
+        deck.resetDeck();
+        System.out.println(deck);
     }
 }

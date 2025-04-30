@@ -3,12 +3,8 @@ import org.junit.jupiter.api.Test;
 import org.perzan22.exceptions.MaxCardInHandException;
 import org.perzan22.model.Card;
 import org.perzan22.model.Player;
-import org.perzan22.model.Rank;
 
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.perzan22.model.Rank.ACE;
 import static org.perzan22.model.Rank.KING;
 import static org.perzan22.model.Suit.CLUBS;
@@ -68,5 +64,21 @@ public class PlayerTest {
                 () -> player.drawCardToHand(card3),
                 "Player can't have 3 cards in hand, it should throw exception"
         );
+    }
+
+    @Test
+    public void testResetHand_fullHand_clearHand() {
+        // given
+        Card card1 = new Card(ACE, CLUBS);
+        Card card2 = new Card(KING, CLUBS);
+        player.drawCardToHand(card1);
+        player.drawCardToHand(card2);
+
+        // when
+        player.resetHand();
+
+        // then
+        assertEquals(0, player.getHand().size(), "Player should have zero cards");
+        assertNotNull(player.getHand(), "Player should have hand");
     }
 }

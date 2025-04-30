@@ -68,4 +68,17 @@ public class DeckTest {
         assertThrows(IllegalStateException.class, () -> deck.drawCard(), "Empty deck should throw exception.");
     }
 
+    @Test
+    public void testResetDeck_deck_deckAfterReset() {
+        // given
+        Deque<Card> deckBeforeReset = new ArrayDeque<>(deck.getDeck());
+
+        // when
+        deck.resetDeck();
+
+        // then
+        assertNotEquals(deck.getDeck(), deckBeforeReset, "Deck should be different after reset");
+        assertNotNull(deck.getDeck(), "Deck should not be null");
+    }
+
 }

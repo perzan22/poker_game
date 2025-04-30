@@ -12,7 +12,7 @@ public class Deck {
     }
 
     // create new card deck
-    private static Deque<Card> createDeck() {
+    private Deque<Card> createDeck() {
 
         // create deque instance
         Deque<Card> deck = new ArrayDeque<>();
@@ -52,8 +52,14 @@ public class Deck {
         return deck.poll();
     }
 
+    // returns size of the deck
     public int size() {
         return deck.size();
+    }
+
+    // after round reset deck and shuffle again
+    public void resetDeck() {
+        this.deck = createDeck();
     }
 
     // getter

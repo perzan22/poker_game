@@ -10,13 +10,13 @@ public class Player {
 
     private String name;
     private ArrayList<Card> hand;
-    private int tokens;
+    private int chips;
     private PlayerStatus status;
 
     // constructor
-    public Player(String name, int tokens) {
+    public Player(String name, int chips) {
         this.name = name;
-        this.tokens = tokens;
+        this.chips = chips;
         this.hand = new ArrayList<>(2);
         this.status = PlayerStatus.INACTIVE;
     }
@@ -31,6 +31,11 @@ public class Player {
         hand.add(card);
     }
 
+    // after round reset hand
+    public void resetHand() {
+        hand.clear();
+    }
+
     // getters and setters
 
     public String getName() {
@@ -41,12 +46,12 @@ public class Player {
         this.name = name;
     }
 
-    public int getTokens() {
-        return tokens;
+    public int getChips() {
+        return chips;
     }
 
-    public void setTokens(int tokens) {
-        this.tokens = tokens;
+    public void setChips(int chips) {
+        this.chips = chips;
     }
 
     public ArrayList<Card> getHand() {
@@ -70,6 +75,6 @@ public class Player {
     @Override
     public String toString() {
         return "Player " + name + " is " + status + ". Player has " + hand.size()
-                + " Cards in Hand: " + hand + " Tokens: " + tokens;
+                + " Cards in Hand: " + hand + " Tokens: " + chips;
     }
 }
