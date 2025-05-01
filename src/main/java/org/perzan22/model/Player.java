@@ -1,6 +1,7 @@
 package org.perzan22.model;
 
 import org.perzan22.exceptions.MaxCardInHandException;
+import org.perzan22.exceptions.NotEnoughChipsException;
 
 import java.util.ArrayList;
 
@@ -9,31 +10,45 @@ public class Player {
     // class variables
 
     private String name;
-    private ArrayList<Card> hand;
+    private ArrayList<Card> holeCards;
     private int chips;
     private PlayerStatus status;
+    private boolean isSmallBlind;
+    private boolean isBigBlind;
+
 
     // constructor
     public Player(String name, int chips) {
         this.name = name;
         this.chips = chips;
-        this.hand = new ArrayList<>(2);
+        this.holeCards = new ArrayList<>(2);
         this.status = PlayerStatus.INACTIVE;
+        this.isSmallBlind = false;
+        this.isBigBlind = false;
     }
 
     // class logic
 
     // draw card form deck
     public void drawCardToHand(Card card) {
-        if (hand.size() >= 2) {
+        if (holeCards.size() >= 2) {
             throw new MaxCardInHandException("Player can't draw more than 2 Cards in one round");
         }
-        hand.add(card);
+        holeCards.add(card);
     }
 
-    // after round reset hand
+    // subtract player's chips when he bet
+    public void subtractChips(int bet) {
+        if (chips >= bet) {
+            chips -= bet;
+        } else {
+            throw new NotEnoughChipsException("Player doesn't have enough chips");
+        }
+    }
+
+    // after round reset holeCards
     public void resetHand() {
-        hand.clear();
+        holeCards.clear();
     }
 
     // getters and setters
@@ -54,12 +69,12 @@ public class Player {
         this.chips = chips;
     }
 
-    public ArrayList<Card> getHand() {
-        return hand;
+    public ArrayList<Card> getHoleCards() {
+        return holeCards;
     }
 
-    public void setHand(ArrayList<Card> hand) {
-        this.hand = hand;
+    public void setHoleCards(ArrayList<Card> holeCards) {
+        this.holeCards = holeCards;
     }
 
     public PlayerStatus getStatus() {
@@ -70,11 +85,26 @@ public class Player {
         this.status = status;
     }
 
+    public boolean isSmallBlind() {
+        return isSmallBlind;
+    }
+
+    public void setSmallBlind(boolean smallBlind) {
+        isSmallBlind = smallBlind;
+    }
+
+    public boolean isBigBlind() {
+        return isBigBlind;
+    }
+
+    public void setBigBlind(boolean bigBlind) {
+        isBigBlind = bigBlind;
+    }
     // toString() method
 
     @Override
     public String toString() {
-        return "Player " + name + " is " + status + ". Player has " + hand.size()
-                + " Cards in Hand: " + hand + " Tokens: " + chips;
+        return "Player " + name + " is " + status + ". Player has " + holeCards.size()
+                + " Cards in Hand: " + holeCards + " Tokens: " + chips;
     }
 }

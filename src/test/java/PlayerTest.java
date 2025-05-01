@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.perzan22.exceptions.MaxCardInHandException;
+import org.perzan22.exceptions.NotEnoughChipsException;
 import org.perzan22.model.Card;
 import org.perzan22.model.Player;
 
@@ -28,8 +29,8 @@ public class PlayerTest {
         player.drawCardToHand(card);
 
         // then
-        assertEquals(1, player.getHand().size(), "Player should have one card");
-        assertEquals(card, player.getHand().getFirst(), "Player should have same card as he drawn");
+        assertEquals(1, player.getHoleCards().size(), "Player should have one card");
+        assertEquals(card, player.getHoleCards().getFirst(), "Player should have same card as he drawn");
     }
 
     @Test
@@ -43,9 +44,9 @@ public class PlayerTest {
         player.drawCardToHand(card2);
 
         // then
-        assertEquals(2, player.getHand().size(), "Player should have two cards");
-        assertEquals(card1, player.getHand().getFirst(), "Player should have same card as he drawn");
-        assertEquals(card2, player.getHand().get(1), "Player should have same card as he drawn");
+        assertEquals(2, player.getHoleCards().size(), "Player should have two cards");
+        assertEquals(card1, player.getHoleCards().getFirst(), "Player should have same card as he drawn");
+        assertEquals(card2, player.getHoleCards().get(1), "Player should have same card as he drawn");
     }
 
     @Test
@@ -78,7 +79,29 @@ public class PlayerTest {
         player.resetHand();
 
         // then
-        assertEquals(0, player.getHand().size(), "Player should have zero cards");
-        assertNotNull(player.getHand(), "Player should have hand");
+        assertEquals(0, player.getHoleCards().size(), "Player should have zero cards");
+        assertNotNull(player.getHoleCards(), "Player should have hand");
+    }
+
+    @Test
+    public void testSubtractChips_enoughChipsToBet_subtractedBetFromPlayerChips() {
+        // given
+        player.setChips(100);
+
+        // when
+        player.subtractChips(50);
+
+        // then
+        assertEquals(50, player.getChips(), "Player should have 50 chips after subtraction");
+    }
+
+    @Test
+    public void testSubtractChips_notEnoughChipsToBet_throwsNotEnoughChipsException() {
+        // given
+        player.setChips(100);
+
+        // then
+        assertThrows(NotEnoughChipsException.class, () -> player.subtractChips(150),
+                "Should throw NotEnoughChipsException after subtracting too much chips");
     }
 }
