@@ -15,6 +15,7 @@ public class Player {
     private PlayerStatus status;
     private boolean isSmallBlind;
     private boolean isBigBlind;
+    private int playerBetAmount;
 
 
     // constructor
@@ -25,6 +26,7 @@ public class Player {
         this.status = PlayerStatus.INACTIVE;
         this.isSmallBlind = false;
         this.isBigBlind = false;
+        this.playerBetAmount = 0;
     }
 
     // class logic
@@ -100,6 +102,15 @@ public class Player {
     public void setBigBlind(boolean bigBlind) {
         isBigBlind = bigBlind;
     }
+
+    public int getPlayerBetAmount() {
+        return playerBetAmount;
+    }
+
+    public void setPlayerBetAmount(int playerBetAmount) {
+        this.playerBetAmount = playerBetAmount;
+    }
+
     // toString() method
 
     @Override
